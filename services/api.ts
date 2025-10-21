@@ -28,19 +28,20 @@ export const TMDB_CONFIG = {
   })(),
 };
 
-export const fetchPopularMovies = async ({ query }: { query?: string } = {}) => {
+export const fetchMovies = async ({ query }: { query : string })  => {
   // Build URL (include API key as query param if present)
-  const apiKeyParam = TMDB_CONFIG.API_KEY ? `&api_key=${TMDB_CONFIG.API_KEY}` : '';
-  const queryPart = query ? `&${query}` : '';
-  const url = `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc${queryPart}${apiKeyParam}`;
+  const endPoint = query
+     ? `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+     : `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc`
+  
 
-  const response = await fetch(url, {
+  const response = await fetch(endPoint, {
     method: 'GET',
     headers: TMDB_CONFIG.headers,
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch movies: ${response.status} ${response.statusText}`);
+    throw new Error(`Failed to fetch movies:  ${response.statusText}`);
   }
 
   const data = await response.json();
