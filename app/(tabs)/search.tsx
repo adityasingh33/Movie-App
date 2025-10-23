@@ -7,7 +7,7 @@ import { fetchMovies } from '@/services/api'
 import MovieCard from '@/components/MovieCard'
 const Search = () => {
 
-    const router = useRouter();
+  const router = useRouter();
 
   const {
     data: movies,
@@ -15,7 +15,7 @@ const Search = () => {
     
     error: moviesError, 
   } = useFetch(() =>
-    fetchMovies({
+    fetchMovies({ 
       query: '',
     })
   );

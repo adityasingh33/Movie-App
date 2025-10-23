@@ -1,4 +1,4 @@
- import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native' // 1. Add Image and TouchableOpacity
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native' 
 import React from 'react'
 import { Link } from 'expo-router'
 import { icons } from '@/constants/icons'
