@@ -85,16 +85,17 @@ export default function Index() {
                   title: item.title,
                   video: false,
                   vote_average: 0,
-                  vote_count: 0,
+                  vote_count:  0,
                 };
                 return (
                  
                   <View className="w-32">
                     <View className="h-48">
-                      <MovieCard {...mappedMovie} />
+                      <MovieCard {...mappedMovie}  showRating={false} />
+                       
                     </View>
                     <Text className="text-white text-xs mt-2 pb-16 text-center" numberOfLines={1}>
-                      {/* {item.title} */}
+                     
                     </Text>
                   </View>
 
