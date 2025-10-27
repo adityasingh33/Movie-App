@@ -33,7 +33,7 @@ const Search = () => {
       if(searchQuery.trim()){
          await loadMovies(); 
 
-        //  if(movies?.length > 0 && movies?.[0]) await updateSearchCount(searchQuery,movies[0]);
+        
       }else{
         reset();
       }

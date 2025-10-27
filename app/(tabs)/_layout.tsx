@@ -54,7 +54,7 @@ const _Layout = () => {
         name="index"
         options={{
           title: 'Home',
-          headerShown: false,
+          headerShown:false,
           tabBarIcon: ({ focused }) => (
             <TabIcon 
                 focused = {focused}

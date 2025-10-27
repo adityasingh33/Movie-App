@@ -70,7 +70,7 @@ export default function Index() {
             <FlatList
               className="mb-4 mt-3"
               data={trendingMovies}
-              renderItem={({ item, index }) => {
+              renderItem={({ item }) => {
                 const mappedMovie = {
                   id: item.movie_id,
                   adult: false,
@@ -115,7 +115,7 @@ export default function Index() {
 
             <FlatList
               data={movies}
-              renderItem={({ item }) => (
+              renderItem={({ item , index}) => (
                 <MovieCard {...item} />
               )}
               keyExtractor={(item) => item.id.toString()}
@@ -134,3 +134,6 @@ export default function Index() {
     </View>
   );
 }
+
+
+
