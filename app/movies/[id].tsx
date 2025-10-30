@@ -1,11 +1,12 @@
-
-
+import { icons } from '@/constants/icons';
 import { images } from '@/constants/images'
 import { getMovieDetails } from '@/services/api'
 import useFetch from '@/services/useFetch'
-import { useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import React from 'react'; // No longer need useEffect/useState
-import { ActivityIndicator, FlatList, Image, Text, View } from 'react-native'
+import { ActivityIndicator, FlatList, Image, Pressable, Text, View } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 const MovieDetailsPage = () => {
@@ -19,21 +20,21 @@ const MovieDetailsPage = () => {
   } = useFetch<MovieDetails>(() => {
     if (!id || Array.isArray(id)) return Promise.reject(new Error("Invalid ID"));
     return getMovieDetails(id);
-  }); // Removed extra comma
+  });
 
   return (
     <View className=' flex-1 bg-primary'>
       <Image source={images.bg} className="flex-1 absolute w-full h-full z-0" resizeMode='cover' />
 
       <FlatList
-        data={[]} // You could put movie.genres or movie.cast here later!
-        keyExtractor={(item) => item.id.toString()} // <-- 3. FIXED KEY EXTRACTOR
+        data={[]}
+        
+        keyExtractor={(item) => item.id.toString()}
         // columnWrapperStyle = {{
         //   justifyContent:'center'
         // }}
 
         ListHeaderComponent={() => (
-          // 1. WRAPPED IN A FRAGMENT AND A VIEW
           <View className="px-5 mt-20 pb-10">
 
 
@@ -49,47 +50,116 @@ const MovieDetailsPage = () => {
 
             {!loading && movie && (
               <>
-                <Text className='text-white text-3xl font-bold mt-4'>{movie.title}</Text>
+
 
                 <Image
                   source={{
                     uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                   }}
-                  className='w-full h-80 rounded-lg my-4 c'
-                  resizeMode='cover'
+                  className='p-20 h-80 flex-1 justify-center items-center'
+                  resizeMode='contain'
                 />
 
-                <Text className='text-white text-lg font-bold mb-2'>Overview</Text>
+                <Text className='text-white text-3xl font-bold mt-4'>{movie.title}</Text>
+
+                <Text className=' text-blue-400 text-sm  mb-2 mt-12'>Overview</Text>
                 <Text className='text-gray-300 text-base'>{movie.overview}</Text>
 
-                <Text className='text-white mt-4'>
-                  Release Date : {movie.release_date}
-                </Text>
 
-                <Text className='text-white flex-col'>
-                  Rating : {movie.vote_average.toFixed(1)}/10
+                <View className='flex flex-row items-center space-x-20 mb-2'>
 
-                </Text>
+                  <View>
+                    <Text className='text-white mt-4 text-md-start ml-2'>Release Date </Text>
+                    <Text className='text-white font-bold text-lg'> {movie.release_date} </Text>
+                  </View>
 
-                <Text className='text-white'>
-                  Popularity : {movie.popularity}
-                </Text>
-                  
+                  <View>
+                    <Text className='text-white mt-4 text-md-start ml-2'>Status </Text>
+                    <Text className='text-white font-bold text-lg'> {movie.status} </Text>
+                  </View>
+
+
+                </View>
+
+                <View className='mb-4'>
+                  <Text className='text-white mb-1 ml-1'>Countries</Text>
+                  <Text className='text-white font-bold '> {movie.production_countries.map(country => country.name).join(" , ")}</Text>
+                </View>
+
+
+                <View className='mb-4 ml-1'>
+                  <Text className='text-white  rounded-lg shadow-lg"'>
+                    Genre
+                  </Text>
+
+                  <View className='flex-row flex-wrap'>
+
+                    {movie.genres?.map((genre) => (
+                      <View
+                        key={genre.id}
+                        className="bg-[#221F3D] rounded-lg  py-2 px-4 mr-2 mb-2"
+                      >
+                        <Text className='text-white'> {genre.name}</Text>
+                      </View>
+                    ))}
+
+
+                  </View>
+
+
+                </View>
+
+                <View className='mb-4 ml-1'>
+                  <Text className='text-white flex-col mb-2'>
+                    Rating
+                  </Text>
+
                   <Text className='text-white'>
-                        Production :  {movie.production_companies?.map(company => company.name).join(', ')}
+                    {movie.vote_average.toFixed(1)}/10
+                  </Text>
+                </View>
+
+                <View className='mb-4 ml-1'>
+                  <Text className='text-white flex-col mb-2'>
+                    Adult
                   </Text>
 
-                  <Text className='text-white'> 
-                      Adult : {movie.adult ? "Yes" : "No"}
+                  <Text className='text-white'>
+                    {movie.adult ? "Yes" : "No"}
                   </Text>
+                </View>
 
-                  <Text className='text-white'> 
-                       Genre : {movie.genres?.map(genre => genre.name).join(",")}
-                  </Text>
-                
+
+                <Pressable 
+                      onPress={() => router.push("/")}
+                          
+                  >
+                       <LinearGradient
+                  colors={['#D6C7FF', '#AB8BFF']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  className='mb-4 ml-1 flex flex-row justify-center items-center p-3 rounded-lg'
+                >
+                 
+
+                  <Text>Visit Homepage</Text>
+                  <Image
+                    className='h-4 w-4 tint-white'
+                    source={icons.arrow}
+                    resizeMode='contain'
+                  />
+                </LinearGradient>
+                      <Text>Visit Homepage</Text>
+                  </Pressable>
+
+
+
               </>
             )}
           </View>
+
+
+
         )}
       />
     </View>
