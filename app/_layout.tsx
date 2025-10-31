@@ -13,11 +13,21 @@ export default function RootLayout() {
       name="(tabs)"
       options={{headerShown : false}}
     />
+
     <Stack.Screen 
       name = "movies/[id]"
       options={{ headerShown : false}}
     />
+
+    <Stack.Screen 
+      name = "otp/getOtp"
+      options={{ headerShown : false}}
+    />
+
     </Stack>
+   
+
+
    </>
    
     )

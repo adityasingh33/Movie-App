@@ -3,7 +3,7 @@ import { images } from '@/constants/images'
 import { getMovieDetails } from '@/services/api'
 import useFetch from '@/services/useFetch'
 import { router, useLocalSearchParams } from 'expo-router'
-import React from 'react'; // No longer need useEffect/useState
+import React from 'react'; 
 import { ActivityIndicator, FlatList, Image, Pressable, Text, View } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -27,12 +27,10 @@ const MovieDetailsPage = () => {
       <Image source={images.bg} className="flex-1 absolute w-full h-full z-0" resizeMode='cover' />
 
       <FlatList
-        data={[]}
-        
+        data={null} 
+        renderItem={({item}) => null} 
         keyExtractor={(item) => item.id.toString()}
-        // columnWrapperStyle = {{
-        //   justifyContent:'center'
-        // }}
+        
 
         ListHeaderComponent={() => (
           <View className="px-5 mt-20 pb-10">
